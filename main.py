@@ -1,6 +1,6 @@
+from src.vacancy import Vacancies
 from src.vacancy_api import HHApi
 from src.vacancy_json import JsonFile
-from src.vacancy import Vacancies
 
 
 def user_interaction() -> None:
@@ -10,15 +10,14 @@ def user_interaction() -> None:
     keyword = input("Введите ключевые слова для поиска вакансий: ").strip().split()
     hh_api = HHApi()
     while True:
-        pages = input("Введите количество страниц для вывода"
-                      "(В среднем 10 вакансий на странице): ").strip()
+        pages = input("Введите количество страниц для вывода" "(В среднем 10 вакансий на странице): ").strip()
         if pages.isdigit():
-            pages = int(pages)
+            pages: str = int(pages)
             break
         else:
             print("Можно ввести только число!")
 
-    vac_list = hh_api.get_vacancies(keyword, pages)
+    vac_list: list[str] = hh_api.get_vacancies(keyword, pages)
 
     print("*" * 50)
     print('Список вакансий с сайта "hh.ru":')
@@ -28,7 +27,7 @@ def user_interaction() -> None:
     while True:
         answer = main_menu()
         if answer == 1:
-            vac_list = hh_api.get_vacancies(keyword, pages)
+            vac_list: list[str] = hh_api.get_vacancies(keyword, pages)
             print(vac_list)
             last_choice = vac_list
             print(f"Найдено {len(vac_list)} вакансий\n")
@@ -103,7 +102,7 @@ def main_menu() -> int:
     while True:
         answer = input("Выберите действие: ").strip()
         if answer.isdigit():
-            answer = int(answer)
+            answer: int = int(answer)
             if 1 <= answer <= 7:
                 break
             else:
