@@ -47,12 +47,14 @@ class Vacancy(BaseVacancy):
         employment: str,
         snippet: str,
         url: str,
+        salary: str | None | dict = None,
     ):
         self.id = vac_id
         self.name: str = name
         self.city: str = city
         self.salary_from: float = salary_from
         self.salary_to: float = salary_to
+        self.__salary = self.__validate(salary)
         self.currency = currency
         self.employment: str = employment
         self.snippet: str = snippet
@@ -106,6 +108,32 @@ class Vacancy(BaseVacancy):
             vacancy_dict["snippet"],
             vacancy_dict["url"],
         )
+
+    @staticmethod
+    def __validate(salary):
+        """Метод валидации зарплаты"""
+        if salary is None:
+            return {"from": 0, "to": 0}
+        if isinstance(salary, str):
+            # "100000 - 150000"
+            try:
+                from_salary, to_salary = map(int, salary.split(" - "))
+                return {"from": from_salary, "to": to_salary}
+            except ValueError:
+                return {"from": 0, "to": 0}
+        elif isinstance(salary, dict):
+            # Убеждаемся, что ключи 'from' и 'to' присутствуют
+            from_salary = salary.get("from", 0)
+            to_salary = salary.get("to", 0)
+            return {"from": from_salary, "to": to_salary}
+        else:
+            return {"from": 0, "to": 0}
+
+    def __ge__(self, other):
+        """Метод сравнения вакансий по зарплате (верхний порог)"""
+        self_salary_to = self.__salary.get("to", 0)
+        other_salary_to = other.__salary.get("to", 0)
+        return self_salary_to >= other_salary_to
 
 
 class Vacancies(BaseVacancies):
@@ -199,7 +227,7 @@ class Vacancies(BaseVacancies):
 
     def filtered_by_salary(self, salary_from: int):
         """Принимает начальный размер зарплаты, возвращает список вакансий,
-         зарплаты в которых больше либо равны указанной."""
+        зарплаты в которых больше либо равны указанной."""
         by_salary = Vacancies()
         for vac in self.__all_vacancies:
             salary = vac.to_dict()["salary_from"]

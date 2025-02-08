@@ -1,10 +1,10 @@
-import unittest
 import os
+import unittest
 
 from src.vacancy import Vacancy
 
 root_dir = os.path.dirname(os.path.abspath(__file__))
-data_dir = os.path.join(root_dir, 'data')
+data_dir = os.path.join(root_dir, "data")
 
 
 class TestVacancy(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestVacancy(unittest.TestCase):
             salary_to=120000,
             currency="RUR",
             employment="Полная занятость",
-            snippet="Заниматься разработкой на Python"
+            snippet="Заниматься разработкой на Python",
         )
 
         self.assertEqual(vacancy.name, "Middle Java Developer")
@@ -45,20 +45,15 @@ class TestVacancy(unittest.TestCase):
             snippet="Заниматься разработкой на Python",
         )
         expected_str = (
-                        "id: 116763625\n"
-                        "Название вакансии: Middle Java Developer\n"
-                        "Город: Москва\n"
-                        "Зарплата\nот: 0 RUR\nдо: 120000 RUR\n"
-                        "Тип занятости: Полная занятость\n"
-                        "Требования: Заниматься разработкой на Python\n"
-                        "Ссылка на вакансию: http://example.com/vacancy/1\n")
+            "id: 116763625\n"
+            "Название вакансии: Middle Java Developer\n"
+            "Город: Москва\n"
+            "Зарплата\nот: 0 RUR\nдо: 120000 RUR\n"
+            "Тип занятости: Полная занятость\n"
+            "Требования: Заниматься разработкой на Python\n"
+            "Ссылка на вакансию: http://example.com/vacancy/1\n"
+        )
         self.assertEqual(str(vacancy), expected_str)
 
     def test_add_vacancy(self, new_vacancy):
         test_vacancy = new_vacancy
-
-
-
-
-
-

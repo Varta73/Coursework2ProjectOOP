@@ -10,7 +10,8 @@ def user_interaction() -> None:
     keyword = input("Введите ключевые слова для поиска вакансий: ").strip().split()
     hh_api = HHApi()
     while True:
-        pages = input("Введите количество страниц для вывода: ").strip()
+        pages = input("Введите количество страниц для вывода"
+                      "(В среднем 10 вакансий на странице): ").strip()
         if pages.isdigit():
             pages = int(pages)
             break

@@ -4,9 +4,8 @@ from abc import ABC, abstractmethod
 
 from src.vacancy import Vacancies, Vacancy
 
-
 root_dir = os.path.dirname(__file__)
-data_dir = os.path.join(root_dir, 'data')
+data_dir = os.path.join(root_dir, "data")
 
 
 class BaseJsonFile(ABC):
